@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taskflow MVP</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Single-user task manager</p>
+        <h1>Taskflow MVP</h1>
+        <p class="intro">
+          Create tasks, keep track of what is finished, and remove anything that is no longer needed.
+        </p>
+      </section>
+
+      <section class="board" aria-labelledby="task-board-title">
+        <div class="board-header">
+          <div>
+            <h2 id="task-board-title">Tasks</h2>
+            <p class="subtitle">Local-only persistence, immediate updates.</p>
+          </div>
+          <output id="task-count" class="task-count" aria-live="polite">0 tasks</output>
+        </div>
+
+        <form id="task-form" class="task-form" novalidate>
+          <label class="sr-only" for="task-title">Task title</label>
+          <input
+            id="task-title"
+            name="title"
+            type="text"
+            maxlength="120"
+            placeholder="Add a task title"
+            autocomplete="off"
+          />
+          <button type="submit">Add Task</button>
+        </form>
+        <p id="form-error" class="form-error" role="alert" aria-live="polite"></p>
+
+        <ul id="task-list" class="task-list" aria-live="polite"></ul>
+        <p id="empty-state" class="empty-state">No tasks yet. Add the first one above.</p>
+      </section>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

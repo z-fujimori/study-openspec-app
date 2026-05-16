@@ -1,0 +1,234 @@
+:root {
+  color-scheme: light;
+  --bg: #f7f3ea;
+  --panel: rgba(255, 251, 245, 0.88);
+  --panel-border: rgba(70, 53, 30, 0.12);
+  --ink: #24180d;
+  --muted: #6e5d4a;
+  --accent: #0f7a5f;
+  --accent-strong: #095d49;
+  --danger: #9f2f20;
+  --shadow: 0 18px 60px rgba(43, 28, 11, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(233, 193, 133, 0.45), transparent 28%),
+    radial-gradient(circle at right, rgba(164, 213, 191, 0.55), transparent 20%),
+    linear-gradient(135deg, #f6efe2 0%, #f4f0ea 48%, #ece8dd 100%);
+}
+
+.app-shell {
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 4rem 0 5rem;
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: var(--accent-strong);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 4.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.intro {
+  max-width: 42rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.board {
+  padding: 1.4rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+}
+
+.board-header,
+.task-form,
+.task-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.board-header {
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.board-header h2,
+.subtitle {
+  margin: 0;
+}
+
+.subtitle,
+.task-meta,
+.empty-state,
+.form-error {
+  color: var(--muted);
+}
+
+.task-count {
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+
+.task-form {
+  align-items: stretch;
+}
+
+.task-form input,
+.task-form button {
+  min-height: 3rem;
+  border-radius: 14px;
+  border: 1px solid rgba(36, 24, 13, 0.12);
+  font: inherit;
+}
+
+.task-form input {
+  flex: 1;
+  padding: 0 1rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.task-form button,
+.task-actions button {
+  padding: 0 1rem;
+  cursor: pointer;
+  transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+.task-form button {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.task-form button:hover,
+.task-form button:focus-visible,
+.task-actions button:hover,
+.task-actions button:focus-visible {
+  transform: translateY(-1px);
+}
+
+.form-error {
+  min-height: 1.5rem;
+  margin: 0.6rem 0 0;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0.2rem 0 0;
+  padding: 0;
+}
+
+.task-item {
+  justify-content: space-between;
+  padding: 0.95rem 0;
+  border-top: 1px solid rgba(36, 24, 13, 0.08);
+}
+
+.task-main {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.task-main input[type="checkbox"] {
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+  margin-top: 0.25rem;
+  accent-color: var(--accent);
+}
+
+.task-title {
+  display: block;
+  font-weight: 600;
+}
+
+.task-title.completed {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.task-meta {
+  font-size: 0.86rem;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.task-actions button {
+  border: 1px solid rgba(36, 24, 13, 0.12);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.task-actions .danger {
+  color: var(--danger);
+}
+
+.empty-state {
+  margin: 1rem 0 0;
+  padding: 1.2rem 0;
+  text-align: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: min(100% - 1rem, 960px);
+    padding-top: 2rem;
+  }
+
+  .board {
+    padding: 1rem;
+  }
+
+  .board-header,
+  .task-item,
+  .task-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-actions {
+    justify-content: flex-start;
+  }
+}

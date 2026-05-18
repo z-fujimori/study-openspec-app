@@ -53,6 +53,18 @@ test("completes an active task and keeps it visible", () => {
   assert.equal(service.listTasks().length, 1);
 });
 
+test("returns a completed task to active", () => {
+  const service = createService();
+  const task = service.createTask("Reopen task");
+  service.completeTask(task.id);
+
+  const activeTask = service.activateTask(task.id);
+
+  assert.equal(activeTask?.completed, false);
+  assert.equal(service.listTasks()[0]?.completed, false);
+  assert.equal(service.listTasks().length, 1);
+});
+
 test("deletes active and completed tasks", () => {
   const service = createService();
   const activeTask = service.createTask("Keep");

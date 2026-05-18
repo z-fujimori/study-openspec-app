@@ -32,6 +32,10 @@ test("validates the MVP flow against the task-management scenarios", () => {
   assert.equal(service.listTasks()[0]?.completed, true);
   assert.equal(service.listTasks()[1]?.completed, false);
 
+  service.activateTask(first.id);
+  assert.equal(service.listTasks()[0]?.completed, false);
+  assert.equal(service.listTasks()[1]?.completed, false);
+
   service.deleteTask(first.id);
   service.deleteTask(second.id);
   assert.deepEqual(service.listTasks(), []);

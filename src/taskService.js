@@ -35,22 +35,11 @@ export class TaskService {
   }
 
   completeTask(taskId) {
-    let changed = false;
-    const nextTasks = this.listTasks().map((task) => {
-      if (task.id !== taskId) {
-        return task;
-      }
+    return this.#updateCompletionState(taskId, true);
+  }
 
-      changed = true;
-      return { ...task, completed: true };
-    });
-
-    if (!changed) {
-      return null;
-    }
-
-    this.repository.saveAll(nextTasks);
-    return nextTasks.find((task) => task.id === taskId) ?? null;
+  activateTask(taskId) {
+    return this.#updateCompletionState(taskId, false);
   }
 
   deleteTask(taskId) {
@@ -62,5 +51,24 @@ export class TaskService {
 
     this.repository.saveAll(nextTasks);
     return true;
+  }
+
+  #updateCompletionState(taskId, completed) {
+    let changed = false;
+    const nextTasks = this.listTasks().map((task) => {
+      if (task.id !== taskId) {
+        return task;
+      }
+
+      changed = true;
+      return { ...task, completed };
+    });
+
+    if (!changed) {
+      return null;
+    }
+
+    this.repository.saveAll(nextTasks);
+    return nextTasks.find((task) => task.id === taskId) ?? null;
   }
 }

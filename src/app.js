@@ -23,9 +23,11 @@ function renderTaskItem(task, handlers) {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = task.completed;
-  checkbox.disabled = task.completed;
-  checkbox.setAttribute("aria-label", `Mark ${task.title} as completed`);
-  checkbox.addEventListener("change", () => handlers.onComplete(task.id));
+  checkbox.setAttribute(
+    "aria-label",
+    task.completed ? `Mark ${task.title} as active` : `Mark ${task.title} as completed`,
+  );
+  checkbox.addEventListener("change", () => handlers.onToggle(task.id, checkbox.checked));
 
   const content = document.createElement("div");
   const title = document.createElement("span");
@@ -41,18 +43,18 @@ function renderTaskItem(task, handlers) {
   const actions = document.createElement("div");
   actions.className = "task-actions";
 
-  if (!task.completed) {
-    const completeButton = document.createElement("button");
-    completeButton.type = "button";
-    completeButton.textContent = "Complete";
-    completeButton.addEventListener("click", () => handlers.onComplete(task.id));
-    actions.append(completeButton);
-  }
+  const stateButton = document.createElement("button");
+  stateButton.type = "button";
+  stateButton.textContent = task.completed ? "Mark Active" : "Complete";
+  stateButton.addEventListener("click", () =>
+    handlers.onToggle(task.id, !task.completed),
+  );
+  actions.append(stateButton);
 
   const deleteButton = document.createElement("button");
   deleteButton.type = "button";
   deleteButton.className = "danger";
-  deleteButton.textContent = "Delete";
+  deleteButton.textContent = "削除";
   deleteButton.addEventListener("click", () => handlers.onDelete(task.id));
   actions.append(deleteButton);
 
@@ -68,8 +70,12 @@ function createApp({ service, elements }) {
     list.replaceChildren(
       ...tasks.map((task) =>
         renderTaskItem(task, {
-          onComplete(taskId) {
-            service.completeTask(taskId);
+          onToggle(taskId, completed) {
+            if (completed) {
+              service.completeTask(taskId);
+            } else {
+              service.activateTask(taskId);
+            }
             render();
           },
           onDelete(taskId) {
